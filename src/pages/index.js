@@ -19,22 +19,38 @@ const HeroStyles = styled.div`
   height: 80vh;
   position: relative;
 
+  /* tablet */
+  ${respondTo.tablet`
+      background-position-x:10%;
+      background-size: cover;
+  `}
   h1 {
     position: absolute;
     font-size: 11rem;
     text-transform: uppercase;
     font-weight: bold;
     word-break: break-word;
-    width: 30vw;
+    width: 32vw;
     left: 60vw;
     top: 5vh;
     span {
       padding-left: 10rem;
+      ${respondTo.tablet`
+        padding:0;
+      `}
     }
     ${respondTo.laptop`
-    top: 10vh;
-    font-size: 8rem;
+      top: 10vh;
+      font-size: 8rem;
+      left: 55vw;
   `}
+
+    ${respondTo.tablet`
+      position: static;
+      width: unset;
+      text-align: center;
+      padding-top: 2rem;
+    `}
   }
   h2 {
     position: absolute;
@@ -44,13 +60,19 @@ const HeroStyles = styled.div`
     text-transform: uppercase;
     font-weight: 100;
     word-break: break-word;
-    width: 15vw;
+    width: 20vw;
     left: 70vw;
     top: 35vh;
     ${respondTo.laptop`
-    font-size: 3.5rem;
-    top: 35vh
+      font-size: 3.5rem;
+      top: 35vh
   `}
+    ${respondTo.tablet`
+      position: static;
+      width: unset;
+      text-align: center;
+      padding-top: 2rem;
+    `}
     span {
       padding-left: 10rem;
     }
@@ -140,6 +162,10 @@ const NewLineUpStyles = styled.div`
   justify-content: center;
   align-items: center;
 
+  ${respondTo.mobile`
+      background-position-x: 50%;
+  `}
+
   h1 {
     font-size: 8rem;
     text-transform: uppercase;
@@ -148,6 +174,11 @@ const NewLineUpStyles = styled.div`
     &:hover {
       transform: rotate(-2deg) skew(2deg);
     }
+
+    text-align: center;
+    ${respondTo.mobile`
+        font-size: 5rem;
+    `}
   }
   h2 {
     margin-top: 3rem;
@@ -157,9 +188,17 @@ const NewLineUpStyles = styled.div`
     padding: 2rem 5rem;
     transition: all 0.3s;
 
+    ${respondTo.mobile`
+      font-size: 2rem;
+    `}
+
     &:hover {
       padding: 3rem 5rem;
       font-size: 5rem;
+      ${respondTo.mobile`
+      padding: 2rem 4rem;
+      font-size: 3rem;
+    `}
     }
 
     &:active {

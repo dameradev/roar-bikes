@@ -1,10 +1,12 @@
 import styled from '@emotion/styled'
 import React from 'react'
 
+import { respondTo } from '../../utils/respondTo'
+
 const FooterStyles = styled.footer`
   height: 50rem;
   width: 100%;
-  padding: 5rem 0;
+  /* padding: 5rem 0; */
   margin-top: 5rem;
   display: flex;
   flex-direction: column;
@@ -21,29 +23,42 @@ const FooterStyles = styled.footer`
   h2 {
     font-size: 2.6rem;
     font-weight: bold;
+    ${respondTo.mobile`
+      font-size: 2rem;
+    `}
   }
   h3 {
     font-size: 2rem;
     font-weight: bold;
+    ${respondTo.mobile`
+      font-size: 1.6rem;
+      text-align: center;
+    `}
   }
   input {
     width: 55rem;
     height: 5rem;
     padding: 0 2rem;
     font-size: 1.8rem;
+    ${respondTo.mobile`
+        width: 30rem;
+    `}
   }
   .cancel-subscription {
     color: grey;
     cursor: pointer;
   }
   .bottom {
-    width: 90vw;
+    width: 70%;
     padding: 5rem;
     margin-top: 5rem;
     border-top: 2px solid grey;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    ${respondTo.mobile`
+        width: 50%;
+    `}
     div {
       a {
         padding-right: 1rem;
