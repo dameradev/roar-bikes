@@ -10,6 +10,7 @@ import GlobalStyles from '../styles/GlobalStyles'
 import Typography from '../styles/Typograpy'
 
 import Logo from '../assets/images/logo.svg'
+import Footer from '../components/Footer'
 
 const Wrapper = styled.main`
   margin: 0 auto;
@@ -27,11 +28,7 @@ const Layout = ({ children }) => {
       <Navigation />
       <Wrapper>
         {children}
-        <footer>
-          {/* © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a> */}
-        </footer>
+        <Footer />
       </Wrapper>
     </ContextProvider>
   )
