@@ -18,9 +18,9 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
+  padding: 0 10%;
   margin: 0 auto;
-  max-width: 1280px;
+  /* max-width: 1280px; */
   height: 100%;
   ul {
     display: flex;

@@ -578,41 +578,54 @@ export default {
   ),
   Logo: (
     <svg
+      id="logo"
       xmlns="http://www.w3.org/2000/svg"
-      width="59.408"
-      height="53.954"
-      viewBox="0 0 59.408 53.954"
+      width="61.264"
+      height="59.635"
+      viewBox="0 0 61.264 59.635"
     >
-      <g id="logo" transform="translate(-34.412 -22.975)">
-        <path
-          id="Path_218"
-          data-name="Path 218"
-          fill="#fff"
-          d="M-834.37,444.975l6.347,6.8h9.742l9.475,10.032L-824.6,479.431h10.467l16.944-17.624-16.944-16.832Z"
-          transform="translate(873.034 -422)"
-        />
-        <path
-          id="Path_219"
-          data-name="Path 219"
-          fill="#fff"
-          d="M-793,444.975l16.089,16.789L-793,478.959l17.923,19.417h10.5l-17.526-19.417,15.745-17.195-15.745-16.789Z"
-          transform="translate(858.4 -422)"
-        />
-        <path
-          id="Path_222"
-          data-name="Path 222"
-          fill="#fff"
-          d="M-827.663,451.342l.076,46.809h-8.184l-.242-53.954h1.7"
-          transform="translate(870.425 -421.222)"
-        />
-        <path
-          id="Path_223"
-          data-name="Path 223"
-          fill="#fff"
-          d="M-817.249,510.426h10.594l14,16.064h-11.769Z"
-          transform="translate(865.855 -450.8)"
-        />
-      </g>
+      <path
+        id="Path_230"
+        data-name="Path 230"
+        d="M86.332,90.17l-6.16-5.554-30.6.12,5.178,5.434Z"
+        transform="translate(-49.569 -84.57)"
+        fill="#0076ff"
+      />
+      <path
+        id="Path_218"
+        data-name="Path 218"
+        d="M-834.627,444.612l5.787,5.52h8.464l8.241,7.607L-825.872,471.1h9.1l14.72-13.365-15.084-13.169Z"
+        transform="translate(847.661 -444.531)"
+        fill="#fff"
+      />
+      <path
+        id="Union_1"
+        data-name="Union 1"
+        d="M5.656,59.635,16.367,43.422,0,27.851,15.486,13.059.31,0l9.967,0L25.59,13.059,8.573,27.851l17,15.647h.007l0,0,.008.007h-.013L15.106,59.635Z"
+        transform="translate(35.674)"
+        fill="#0076ff"
+      />
+      <path
+        id="Path_222"
+        data-name="Path 222"
+        d="M-828.439,449.236l.069,38.111h-7.643l.039-43.5h1.514"
+        transform="translate(845.292 -443.753)"
+        fill="#fff"
+      />
+      <path
+        id="Path_223"
+        data-name="Path 223"
+        d="M0,.155,8.859,0,24.831,14.64l-9.055.158Z"
+        transform="matrix(1, 0.017, -0.017, 1, 22.096, 28.364)"
+        fill="#fff"
+      />
+      <path
+        id="Path_229"
+        data-name="Path 229"
+        d="M66.753,91.1l4.694-6.369h-36.8L29.864,91.1Z"
+        transform="translate(-28.864 -36.57)"
+        fill="#0076ff"
+      />
     </svg>
   ),
 }

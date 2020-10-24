@@ -4,6 +4,7 @@ import { useStaticQuery, graphql, Link } from 'gatsby'
 import StoreContext from '~/context/StoreContext'
 import { Grid, Product, Title, PriceTag } from './styles'
 import { Img } from '~/utils/styles'
+import { getPrice } from '../../utils/helpers'
 
 const ProductGrid = () => {
   const {
@@ -12,7 +13,10 @@ const ProductGrid = () => {
   const { allShopifyProduct } = useStaticQuery(
     graphql`
       query {
-        allShopifyProduct(sort: { fields: [createdAt], order: DESC }) {
+        allShopifyProduct(
+          sort: { fields: [createdAt], order: DESC }
+          limit: 3
+        ) {
           edges {
             node {
               id
@@ -40,12 +44,7 @@ const ProductGrid = () => {
     `
   )
 
-  const getPrice = price =>
-    Intl.NumberFormat(undefined, {
-      currency: checkout.currencyCode ? checkout.currencyCode : 'EUR',
-      minimumFractionDigits: 2,
-      style: 'currency',
-    }).format(parseFloat(price ? price : 0))
+  // const formattedPrice = getPrice(price)
 
   return (
     <Grid>
@@ -70,7 +69,7 @@ const ProductGrid = () => {
                 )}
               </Link>
               <Title>{title}</Title>
-              <PriceTag>{getPrice(firstVariant.price)}</PriceTag>
+              <PriceTag>{getPrice(firstVariant.price, checkout)}</PriceTag>
             </Product>
           )
         )

@@ -20,10 +20,12 @@ const Typography = createGlobalStyle`
     margin: 0;
   }
   a {
-    color: var(--black);
-    text-decoration-color: var(--red);
+    /* color: var(--black); */
+    color: inherit;
+    /* text-decoration-color: var(--red); */
     /* Chrome renders this weird with this font, so we turn it off */
-    text-decoration-skip-ink: none;
+    /* text-decoration-skip-ink: none; */
+    text-decoration: none;
   }
   mark, .mark {
     background: var(--yellow);

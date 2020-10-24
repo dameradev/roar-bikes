@@ -28,13 +28,13 @@ const Navigation = ({ siteTitle }) => {
 
         <ul>
           <li>
-            <MenuLink to="/cart">Home</MenuLink>
+            <MenuLink to="/">Home</MenuLink>
           </li>
           <li>
-            <MenuLink to="/cart">Bikes</MenuLink>
+            <MenuLink to="/bikes">Bikes</MenuLink>
           </li>
           <li>
-            <MenuLink to="/cart">Accesories</MenuLink>
+            <MenuLink to="/accessories">Accesories</MenuLink>
           </li>
           <li>
             <MenuLink to="/cart">

@@ -119,13 +119,27 @@ const NewLineUpStyles = styled.div`
     font-size: 12rem;
     text-transform: uppercase;
     font-weight: 900;
+    transition: all 0.3s;
+    &:hover {
+      transform: rotate(-2deg) skew(2deg);
+    }
   }
   h2 {
     margin-top: 5rem;
     text-transform: uppercase;
-    font-size: 6rem;
-    border: 2rem solid var(--white);
+    font-size: 5rem;
+    border: 1.6rem solid var(--white);
     padding: 3rem 6rem;
+    transition: all 0.3s;
+
+    &:hover {
+      padding: 4rem 8rem;
+      font-size: 6rem;
+    }
+
+    &:active {
+      transform: translateY(5px);
+    }
   }
 `
 const IndexPage = () => (
@@ -156,7 +170,9 @@ const IndexPage = () => (
     </GoByBikeStyles>
     <NewLineUpStyles>
       <h1>New line-up 2021</h1>
-      <h2>all models</h2>
+      <h2>
+        <Link to="bikes">all models</Link>
+      </h2>
     </NewLineUpStyles>
 
     <ProductGrid />
