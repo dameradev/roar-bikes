@@ -22,6 +22,10 @@ export const HeaderWrapper = styled.header`
 
   .hamburger {
     color: white;
+    display: none;
+    ${respondTo.tabletMini`
+      display: block;
+    `}
   }
 `
 

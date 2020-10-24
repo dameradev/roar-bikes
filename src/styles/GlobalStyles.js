@@ -9,12 +9,14 @@ const GlobalStyles = createGlobalStyle`
     --grey: #efefef;
   }
   html {
-    
+    box-sizing:border-box;
     background-size: 450px;
     background-attachment: fixed;
     font-size: 10px;
   }
-
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
   body {
     font-size: 2rem;
     margin:0;

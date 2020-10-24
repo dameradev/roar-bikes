@@ -90,7 +90,7 @@ const UrbanBikeStyles = styled.div`
   overflow: hidden;
 
   ${respondTo.mobilePortrait`
-      height: 55vh;
+      height: 80vh;
   `}
 
   img {

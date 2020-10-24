@@ -6,8 +6,8 @@ import { respondTo } from '../../utils/respondTo'
 const FooterStyles = styled.footer`
   height: 50rem;
   width: 100%;
-  /* padding: 5rem 0; */
-  margin-top: 5rem;
+  padding: 1rem;
+  /* margin-top: 5rem; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -41,7 +41,7 @@ const FooterStyles = styled.footer`
     padding: 0 2rem;
     font-size: 1.8rem;
     ${respondTo.mobile`
-        width: 30rem;
+        width: 25rem;
     `}
   }
   .cancel-subscription {
@@ -49,15 +49,15 @@ const FooterStyles = styled.footer`
     cursor: pointer;
   }
   .bottom {
-    width: 70%;
+    width: 100%;
     padding: 5rem;
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
     border-top: 2px solid grey;
     display: flex;
     justify-content: space-between;
     align-items: center;
     ${respondTo.mobile`
-        width: 50%;
+        // width: 50%;
     `}
     div {
       a {
