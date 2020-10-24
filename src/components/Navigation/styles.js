@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 import { breakpoints } from '../../utils/styles'
 
 export const HeaderWrapper = styled.header`
-  background: black;
+  background: #222222;
   margin-top: -12rem;
   height: 120px;
   position: fixed;

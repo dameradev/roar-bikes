@@ -64,18 +64,43 @@ const UrbanBikeStyles = styled.div`
   font-size: 4rem;
   display: flex;
   justify-content: space-between;
-  padding: 0 15rem;
+
+  overflow: hidden;
+
+  ${respondTo.mobilePortrait`
+      height: 55vh;
+  `}
+
+  img {
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    height: 40vh;
+    opacity: 0.6;
+  }
   div {
-    width: 50%;
+    margin-left: 25%;
+    z-index: 2;
+
     text-align: center;
     padding: 5rem;
     font-weight: 100;
+    ${respondTo.laptopSmall`
+      margin-left: 0;
+  `}
+
     h2 {
       font-weight: 100;
+      ${respondTo.tabletMini`
+        font-size: 3rem;
+      `}
     }
   }
   p {
     font-size: 2rem;
+    ${respondTo.tabletMini`
+        font-size: 2rem;
+      `}
   }
   button {
     padding: 1.5rem 3rem;
@@ -116,7 +141,7 @@ const NewLineUpStyles = styled.div`
   align-items: center;
 
   h1 {
-    font-size: 12rem;
+    font-size: 8rem;
     text-transform: uppercase;
     font-weight: 900;
     transition: all 0.3s;
@@ -125,16 +150,16 @@ const NewLineUpStyles = styled.div`
     }
   }
   h2 {
-    margin-top: 5rem;
+    margin-top: 3rem;
     text-transform: uppercase;
-    font-size: 5rem;
-    border: 1.6rem solid var(--white);
-    padding: 3rem 6rem;
+    font-size: 3rem;
+    border: 1rem solid var(--white);
+    padding: 2rem 5rem;
     transition: all 0.3s;
 
     &:hover {
-      padding: 4rem 8rem;
-      font-size: 6rem;
+      padding: 3rem 5rem;
+      font-size: 5rem;
     }
 
     &:active {

@@ -17,18 +17,20 @@ export const Product = styled.div`
   display: flex;
   min-height: 100%;
   flex-direction: column;
+  justify-content: space-between;
 `
 
 export const Title = styled.span`
   font-weight: 300;
-  font-size: 5rem;
+  font-size: 4rem;
   padding-top: 3rem;
+  word-break: break-word;
   /* text-align: center; */
 `
 
 export const PriceTag = styled.span`
   font-weight: 300;
-  font-size: 3rem;
+  font-size: 2rem;
   /* text-align: center; */
   margin-top: 15px;
 
