@@ -41,9 +41,12 @@ const GlobalStyles = createGlobalStyle`
     }
   }
 
-  .gatsby-image-wrapper img[src*=base64\\,] {
+  /* .gatsby-image-wrapper img[src*=base64\\,] {
     image-rendering: -moz-crisp-edges;
     image-rendering: pixelated;
+  } */
+  ul {
+    list-style: none;
   }
 
   /* Scrollbar Styles */
@@ -78,6 +81,7 @@ const GlobalStyles = createGlobalStyle`
     position: relative;
     display: inline-block;
   }
+  
 
 `
 

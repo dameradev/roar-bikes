@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from '@emotion/styled'
@@ -11,6 +11,7 @@ import Typography from '../styles/Typograpy'
 
 import Logo from '../assets/images/logo.svg'
 import Footer from '../components/Footer'
+import Drawer from '../components/Navigation/drawer'
 
 const Wrapper = styled.main`
   margin: 0 auto;
@@ -20,12 +21,19 @@ const Wrapper = styled.main`
 `
 
 const Layout = ({ children }) => {
+  const [navOpen, setNavOpen] = useState(false)
+
+  const toggleNav = navOpen => {
+    setNavOpen(!navOpen)
+  }
+
   return (
     <ContextProvider>
       <GlobalStyles />
       <Typography />
 
-      <Navigation />
+      <Navigation toggleNav={toggleNav} isOpenNav={navOpen} />
+      {navOpen && <Drawer toggleNav={toggleNav} isOpenNav={navOpen} />}
       <Wrapper>
         {children}
         <Footer />

@@ -3,6 +3,8 @@ import { Link } from 'gatsby'
 
 import { breakpoints } from '../../utils/styles'
 
+import { respondTo } from '../../utils/respondTo'
+
 export const HeaderWrapper = styled.header`
   background: #222222;
   margin-top: -12rem;
@@ -12,6 +14,15 @@ export const HeaderWrapper = styled.header`
   z-index: 100;
 
   border-bottom: 2px solid grey;
+  .nav {
+    ${respondTo.tabletMini`
+      display: none;
+    `}
+  }
+
+  .hamburger {
+    color: white;
+  }
 `
 
 export const Container = styled.div`

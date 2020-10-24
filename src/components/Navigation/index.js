@@ -8,6 +8,7 @@ import { CartCounter, Container, MenuLink, HeaderWrapper } from './styles'
 import Logo from '../../assets/images/logo.svg'
 import { Img } from '../../utils/styles'
 import icons from '../../utils/icons'
+import Nav from './nav'
 
 const useQuantity = () => {
   const {
@@ -18,7 +19,7 @@ const useQuantity = () => {
   return [total !== 0, total]
 }
 
-const Navigation = ({ siteTitle }) => {
+const Navigation = ({ siteTitle, isOpenNav, toggleNav }) => {
   const [hasItems, quantity] = useQuantity()
 
   return (
@@ -26,23 +27,15 @@ const Navigation = ({ siteTitle }) => {
       <Container>
         <MenuLink to="/">{icons.Logo}</MenuLink>
 
-        <ul>
-          <li>
-            <MenuLink to="/">Home</MenuLink>
-          </li>
-          <li>
-            <MenuLink to="/bikes">Bikes</MenuLink>
-          </li>
-          <li>
-            <MenuLink to="/accessories">Accesories</MenuLink>
-          </li>
-          <li>
-            <MenuLink to="/cart">
-              {hasItems && <CartCounter>{quantity}</CartCounter>}
-              Cart 🛍
-            </MenuLink>
-          </li>
-        </ul>
+        <Nav
+          className="nav"
+          isOpenNav={isOpenNav}
+          hasItems={hasItems}
+          quantity={quantity}
+        />
+        <div className="hamburger" onClick={() => toggleNav(isOpenNav)}>
+          mob
+        </div>
       </Container>
     </HeaderWrapper>
   )
