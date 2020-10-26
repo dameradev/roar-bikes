@@ -25,7 +25,9 @@ const Navigation = ({ siteTitle, isOpenNav, toggleNav }) => {
   return (
     <HeaderWrapper>
       <Container>
-        <MenuLink to="/">{icons.Logo}</MenuLink>
+        <MenuLink to="/" className="logo">
+          {icons.Logo}
+        </MenuLink>
 
         <Nav
           className="nav"

@@ -7,13 +7,21 @@ import { respondTo } from '../../utils/respondTo'
 
 export const HeaderWrapper = styled.header`
   background: #222222;
-  margin-top: -12rem;
-  height: 120px;
+  margin-top: -7rem;
+  height: 7rem;
   position: fixed;
   width: 100%;
   z-index: 100;
 
   border-bottom: 2px solid grey;
+  .logo {
+    display: flex;
+    align-items: center;
+    svg {
+      width: 4rem;
+      height: 4rem;
+    }
+  }
   .nav {
     ${respondTo.tabletMini`
       display: none;

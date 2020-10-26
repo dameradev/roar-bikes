@@ -15,7 +15,7 @@ import Drawer from '../components/Navigation/drawer'
 
 const Wrapper = styled.main`
   margin: 0 auto;
-  margin-top: 12rem;
+  margin-top: 7rem;
   /* max-width: 960px; */
   /* padding: 0px 1.0875rem 1.45rem; */
 `
