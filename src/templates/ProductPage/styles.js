@@ -15,3 +15,22 @@ export const ProductDescription = styled.div`
   font-family: 'Helvetica', 'Helvetica', sans-serif;
   font-weight: 300;
 `
+
+export const ProductStyles = styled.div`
+  display: grid;
+  grid-template-columns: 1fr minmax(20rem, 40rem);
+  grid-column-gap: 6rem;
+`
+export const ProductDetails = styled.div`
+  .product {
+    &__title {
+      font-size: 3.2rem;
+      font-weight: bold;
+    }
+
+    &__description {
+      text-align: justify;
+    }
+  }
+`
+export const ProductImage = styled.div``

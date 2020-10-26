@@ -6,19 +6,29 @@ import { PriceTag, Product, Title } from '../components/ProductGrid/styles'
 import StoreContext from '~/context/StoreContext'
 import { Img } from '~/utils/styles'
 import { getPrice } from '../utils/helpers'
+import { respondTo } from '../utils/respondTo'
 
 import BikeBackgound from '../assets/images/bikes-backg.jpg'
 
 const BikePageStyles = styled.div`
-  background: url(${BikeBackgound}) no-repeat;
+  /* background: url(${BikeBackgound}) no-repeat; */
   background-position-x: 60%;
   /* background-repeat: 1; */
   padding: 5rem 10%;
   display: grid;
   grid-template-columns: 40rem 1fr;
   grid-row-gap: 5rem;
+  ${respondTo.tabletMini`
+    grid-template-columns: minmax(30rem, 1fr); 
+    justify-content: center;   
+  `}
   .filters {
     width: 30rem;
+
+    ${respondTo.tabletMini`
+      display: none;
+      grid-template-columns: 1fr;    
+    `}
     h3 {
       font-size: 3rem;
       font-weight: 500;
@@ -41,8 +51,20 @@ const BikePageStyles = styled.div`
   .bike-grid {
     /* max-width: 60%; */
     display: grid;
+    /* text-align: center; */
+
     grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     grid-gap: 5rem;
+    justify-items: space-between;
+     a {
+      /* max-height: 20rem; */
+      img {
+       /* object-fit: cover; */
+       /* width: 70% important; */
+       /* max-height: 100% !important; */
+      }
+    
+    }
   }
 `
 
@@ -140,7 +162,7 @@ export const query = graphql`
             originalSrc
             localFile {
               childImageSharp {
-                fluid(maxWidth: 910) {
+                fluid(maxWidth: 400) {
                   ...GatsbyImageSharpFluid_withWebp_tracedSVG
                 }
               }
