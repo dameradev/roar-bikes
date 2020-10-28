@@ -158,8 +158,8 @@ const ProductForm = ({ product }) => {
     setVariant({ ...selectedVariant })
   }
 
-  const handleAddToCart = () => {
-    addVariantToCart(productVariant.shopifyId, quantity)
+  const handleAddToCart = price => {
+    addVariantToCart(productVariant.shopifyId, quantity, price)
   }
 
   /* 
@@ -228,7 +228,7 @@ const ProductForm = ({ product }) => {
 
   // </>
 
-  console.log(options)
+  // console.log(options)
 
   const increaseQuantity = quantity => {
     setQuantity(quantity !== 10 ? quantity + 1 : quantity)
@@ -303,7 +303,7 @@ const ProductForm = ({ product }) => {
         className="add-to-cart"
         type="submit"
         disabled={!available || adding}
-        onClick={handleAddToCart}
+        onClick={() => handleAddToCart(variant.price)}
       >
         Add to Cart
       </button>

@@ -1,13 +1,36 @@
+import styled from '@emotion/styled'
 import React from 'react'
 
 import Cart from '~/components/Cart'
 import { Container } from '~/utils/styles'
 
+const CartPageStyles = styled.div`
+  padding: 0 10%;
+  margin-top: 5rem;
+
+  .header {
+    padding: 3rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    padding-bottom: 1rem;
+  }
+  h3 {
+    font-size: 1.6rem;
+  }
+`
+
 const CartPage = () => (
-  <Container>
-    <h1>Cart</h1>
+  <CartPageStyles>
+    <div className="header">
+      <h1>Your Cart</h1>
+      <h3>Conitinue shopping</h3>
+    </div>
     <Cart />
-  </Container>
+  </CartPageStyles>
 )
 
 export default CartPage

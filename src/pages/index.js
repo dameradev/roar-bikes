@@ -9,8 +9,6 @@ import UrbanBike from '../assets/images/urban-bike.jpg'
 import NewLineUp from '../assets/images/new-line-up.jpg'
 import { respondTo } from '../utils/respondTo'
 
-// import Img from
-
 const HeroStyles = styled.div`
   background: url(${heroback});
   background-size: cover;

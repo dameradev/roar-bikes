@@ -78,7 +78,7 @@ const ContextProvider = ({ children }) => {
     <Context.Provider
       value={{
         store,
-        addVariantToCart: (variantId, quantity) => {
+        addVariantToCart: (variantId, quantity, price) => {
           if (variantId === '' || !quantity) {
             console.error('Both a size and quantity are required.')
             return
@@ -92,7 +92,10 @@ const ContextProvider = ({ children }) => {
 
           const checkoutId = checkout.id
           const lineItemsToUpdate = [
-            { variantId, quantity: parseInt(quantity, 10) },
+            {
+              variantId,
+              quantity: parseInt(quantity, 10),
+            },
           ]
 
           return client.checkout
@@ -114,7 +117,10 @@ const ContextProvider = ({ children }) => {
         },
         updateLineItem: (client, checkoutID, lineItemID, quantity) => {
           const lineItemsToUpdate = [
-            { id: lineItemID, quantity: parseInt(quantity, 10) },
+            {
+              id: lineItemID,
+              quantity: parseInt(quantity, 10),
+            },
           ]
 
           return client.checkout
