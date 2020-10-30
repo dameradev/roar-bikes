@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { graphql, Link } from 'gatsby'
 import React, { useContext } from 'react'
-import { PriceTag, Product, Title } from '../components/ProductGrid/styles'
+// import { PriceTag, Product, Title } from '../components/ProductGrid/styles'
 
 import StoreContext from '~/context/StoreContext'
 import { Img } from '~/utils/styles'
@@ -9,6 +9,10 @@ import { getPrice } from '../utils/helpers'
 import { respondTo } from '../utils/respondTo'
 
 import BikeBackgound from '../assets/images/bikes-backg.jpg'
+import Product from '../components/ProductGrid/product'
+
+import BackgroundSlider from 'gatsby-image-background-slider'
+import Slideshow from '../components/Slideshow'
 
 const BikePageStyles = styled.div`
   /* background: url(${BikeBackgound}) no-repeat; */
@@ -16,7 +20,7 @@ const BikePageStyles = styled.div`
   /* background-repeat: 1; */
   padding: 5rem 10%;
   display: grid;
-  grid-template-columns: 40rem 1fr;
+  grid-template-columns: 1fr;
   grid-row-gap: 5rem;
   ${respondTo.tabletMini`
     grid-template-columns: minmax(30rem, 1fr); 
@@ -53,7 +57,7 @@ const BikePageStyles = styled.div`
     display: grid;
     /* text-align: center; */
 
-    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
     grid-gap: 5rem;
     justify-items: space-between;
      a {
@@ -64,6 +68,56 @@ const BikePageStyles = styled.div`
        /* max-height: 100% !important; */
       }
     
+    }
+  }
+`
+
+const BikePageFilters = styled.div`
+  padding: 1rem 10%;
+  .select-wrapper {
+    width: 20rem;
+    height: 5rem;
+    position: relative;
+    color: #606060;
+    border: 1px solid #606060;
+
+    &:after {
+      content: '⌄';
+      color: #606060;
+      display: inline-block;
+      right: 11px;
+      top: 6px;
+      height: 34px;
+      width: 34px;
+      position: absolute;
+      pointer-events: none;
+    }
+  }
+  select {
+    padding: 1rem 2.5rem;
+    font-size: 1.8rem;
+    color: inherit;
+    text-transform: uppercase;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-weight: 800;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+
+    &::-ms-expand {
+      display: none;
+    }
+    /* &::::before */
+
+    option {
+      &:first-of-type {
+        font-size: 1.8rem;
+        padding: 1rem 2.5rem;
+      }
     }
   }
 `
@@ -92,8 +146,26 @@ const bikes = props => {
   // console.log(bikes.flat())
 
   return (
-    <BikePageStyles>
-      <div className="filters">
+    <>
+      <Slideshow
+        // query={'/slideshow/i'}
+        slidesCaptions={[
+          { text: 'Chose your type of riding', button: 'road bikes' },
+          { text: 'Riding has never been better', button: 'electric bikes' },
+        ]}
+      />
+      <BikePageFilters>
+        <div className="select-wrapper">
+          <select name="price">
+            <option>Price</option>
+            {priceRange.map(price => (
+              <option value={price}>{price}</option>
+            ))}
+          </select>
+        </div>
+      </BikePageFilters>
+      <BikePageStyles>
+        {/* <div className="filters">
         <h3>Filters</h3>
         <ul className="filters-item">
           <li>
@@ -117,34 +189,25 @@ const bikes = props => {
             </ul>
           </li>
         </ul>
-      </div>
-      <div className="bike-grid">
-        {bikes.map(
-          ({
-            node: {
-              id,
-              handle,
-              title,
-              images: [firstImage],
-              variants: [firstVariant],
-            },
-          }) => (
-            <Product key={id}>
-              <Link to={`/product/${handle}/`}>
-                {firstImage && firstImage.localFile && (
-                  <Img
-                    fluid={firstImage.localFile.childImageSharp.fluid}
-                    alt={handle}
-                  />
-                )}
-              </Link>
-              <Title>{title}</Title>
-              <PriceTag>Starting from {firstVariant.price}</PriceTag>
-            </Product>
-          )
-        )}
-      </div>
-    </BikePageStyles>
+      </div> */}
+        <div className="bike-grid">
+          {bikes.map(
+            ({
+              node: {
+                id,
+                handle,
+                title,
+                images: [firstImage],
+                variants: [firstVariant],
+              },
+              node,
+            }) => (
+              <Product node={node} />
+            )
+          )}
+        </div>
+      </BikePageStyles>
+    </>
   )
 }
 
