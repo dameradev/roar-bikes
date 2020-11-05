@@ -12,7 +12,6 @@ const Product = ({
     variants: [firstVariant],
   },
 }) => {
-  console.log(id, 'here')
   return (
     <ProductStyles key={id}>
       <Link to={`/product/${handle}/`}>
