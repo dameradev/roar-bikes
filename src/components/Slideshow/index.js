@@ -60,7 +60,7 @@ const Slideshow = ({ slidesCaptions }) => {
       >
         {/* Captions in sync with background images*/}
         {slidesCaptions.map(caption => (
-          <div className="caption">
+          <div key={caption} className="caption">
             <p>{caption.text}</p>
             <button>{caption.button}</button>
           </div>

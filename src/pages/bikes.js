@@ -15,6 +15,9 @@ import BackgroundSlider from 'gatsby-image-background-slider'
 import Slideshow from '../components/Slideshow'
 import BikesFilter from '../components/BikesFilter'
 
+import queryString from 'query-string'
+import { filter } from 'lodash'
+
 const BikePageStyles = styled.div`
   /* background: url(${BikeBackgound}) no-repeat; */
   background-position-x: 60%;
@@ -77,35 +80,45 @@ const bikes = props => {
   //   store: { checkout },
   // } = useContext(StoreContext)
 
+  console.log()
+  const price = props.location.search
+    ? queryString.parse(props.location.search)
+    : null
+  // console.log()
+  let minPrice = null
+  let maxPrice = null
+
+  console.log(price)
+  if (price) {
+    minPrice = parseInt(
+      Array.from(price?.price?.replace(/\D/g, ' ').trim())
+        .filter(value => value !== ' ')
+        .slice(0, 4)
+        .join('')
+    )
+    maxPrice = parseInt(
+      Array.from(price?.price?.replace(/\D/g, ' ').trim())
+        .filter(value => value !== ' ')
+        .slice(4, 9)
+        .join('')
+    )
+  }
+  // console.log(minPrice)
+  // console.log(price.replace(/\D/g, ''))
   const bikes = props?.data?.bikes?.edges
+  let filteredBikes = bikes
 
-  let prices = []
-  bikes.forEach(({ node }) => {
-    prices.push(+node.priceRange.minVariantPrice.amount)
-    prices.push(+node.priceRange.maxVariantPrice.amount)
-  })
-  prices.sort((a, b) => (a > b ? 1 : -1))
-  prices = [...new Set(prices)]
+  console.log(maxPrice)
+  if (minPrice || maxPrice) {
+    filteredBikes = bikes.filter(({ node }) => {
+      // console.log(node)
+      const minAmount = +node.priceRange.minVariantPrice.amount
+      const maxAmount = +node.priceRange.maxVariantPrice.amount
+      if (minAmount >= minPrice && maxAmount <= maxPrice) return node
+    })
+  }
 
-  const newPrices = prices.map((price, index) => {
-    return `
-      ${price} 
-      ${prices.length - 1 !== index ? 'to' : ''} 
-      ${prices[index + 1] ? prices[index + 1] : '+'} €
-    `
-  })
-
-  const priceRange = [
-    '500$-999$',
-    '1000$-1999$',
-    '2000$-2999$',
-    '3000$-3999$',
-    '4000$-4999$',
-    '5000$-5999$',
-    '6000$-6999$',
-    '7000$+',
-  ]
-
+  console.log(filteredBikes)
   return (
     <>
       <Slideshow
@@ -117,34 +130,12 @@ const bikes = props => {
       />
 
       <BikePageStyles>
-        {/* <div className="filters">
-        <h3>Filters</h3>
-        <ul className="filters-item">
-          <li>
-            <h4>Category</h4>
-            <ul>
-              <li>Mountain Bikes</li>
-              <li>Road Bikes</li>
-              <li>City/Urban Bikes</li>
-              <li>Electric Bikes</li>
-              <li>Junior Bikes</li>
-            </ul>
-          </li>
-        </ul>
-        <ul className="filters-item">
-          <li>
-            <h4>Price category</h4>
-            <ul>
-              {priceRange.map(priceItem => (
-                <li>{priceItem}</li>
-              ))}
-            </ul>
-          </li>
-        </ul>
-      </div> */}
-        <BikesFilter selectedTag={props.pageContext.tag} />
+        <BikesFilter
+          selectedTag={props.pageContext.tag}
+          pathname={props.location.pathname}
+        />
         <div className="bike-grid">
-          {bikes.map(
+          {filteredBikes.map(
             ({
               node: {
                 id,
@@ -155,7 +146,7 @@ const bikes = props => {
               },
               node,
             }) => (
-              <Product node={node} />
+              <Product key={id} node={node} />
             )
           )}
         </div>

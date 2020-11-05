@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useStaticQuery, graphql, navigate } from 'gatsby'
-import React from 'react'
+import React, { useState } from 'react'
 
 const BikePageFilters = styled.div`
   /* padding: 1rem 10%; */
@@ -74,8 +74,6 @@ const BikesFilter = props => {
     }
   `)
 
-  console.log(tags)
-
   let tagsNew = tags.edges.reduce((acc, { node }) => {
     node.tags.forEach(tag => {
       if (acc[tag]) {
@@ -94,28 +92,54 @@ const BikesFilter = props => {
     tagsFormated.push({ category: key, count: tagsNew[key].count })
   }
 
-  const handleChange = e => {
-    console.log(e.target.value)
+  let prices = []
+  tags.edges.forEach(({ node }) => {
+    prices.push(+node.priceRange.minVariantPrice.amount)
+    prices.push(+node.priceRange.maxVariantPrice.amount)
+  })
+  prices.sort((a, b) => (a > b ? 1 : -1))
+  prices = [...new Set(prices)]
+
+  const newPrices = prices.map((price, index) => {
+    return `
+      ${price} 
+      ${prices.length - 1 !== index ? 'to' : ''} 
+      ${prices[index + 1] ? prices[index + 1] : '+'} €
+    `
+  })
+  newPrices.pop()
+  const [price, setPrice] = useState(newPrices[0])
+  const handleCategoryChange = e => {
     navigate(`/bikes/${e.target.value}`)
   }
 
-  console.log(props, 'props')
+  const handleFilterChange = e => {
+    // console.log(e.target.value)
+    navigate(`${props.pathname}?price=${e.target.value}`)
+  }
+
+  //   console.log(props, 'props')
   return (
     <BikePageFilters>
-      {/* <div className="select-wrapper">
+      <div className="select-wrapper" onChange={e => handleFilterChange(e)}>
         <select name="price">
           <option>Price</option>
-          {newPrices.map(price => (
-            <option value={price}>{price}</option>
+          {newPrices.map((price, index) => (
+            <option key={`${price}-${index}`} value={price}>
+              {price}
+            </option>
           ))}
         </select>
-      </div> */}
+      </div>
 
       <div className="select-wrapper">
-        <select value={props.selectedTag} onChange={e => handleChange(e)}>
+        <select
+          value={props.selectedTag}
+          onChange={e => handleCategoryChange(e)}
+        >
           <option>Category</option>
           {tagsFormated.map((tag, index) => (
-            <option value={tag.category}>
+            <option key={`${tag}-${index}`} value={tag.category}>
               {tag.category}({tag.count})
             </option>
           ))}
