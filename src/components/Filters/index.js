@@ -6,6 +6,7 @@ const BikePageFilters = styled.div`
   /* padding: 1rem 10%; */
   display: flex;
   .select-wrapper {
+    margin: 0 2rem;
     width: 25rem;
     height: 5rem;
     position: relative;
@@ -54,9 +55,28 @@ const BikePageFilters = styled.div`
 `
 
 const BikesFilter = props => {
-  const { tags } = useStaticQuery(graphql`
+  const { bikeFilters, accesFilters } = useStaticQuery(graphql`
     query {
-      tags: allShopifyProduct(filter: { productType: { ne: "accessories" } }) {
+      bikeFilters: allShopifyProduct(
+        filter: { productType: { ne: "accessories" } }
+      ) {
+        edges {
+          node {
+            tags
+            priceRange {
+              minVariantPrice {
+                amount
+              }
+              maxVariantPrice {
+                amount
+              }
+            }
+          }
+        }
+      }
+      accesFilters: allShopifyProduct(
+        filter: { productType: { eq: "accessories" } }
+      ) {
         edges {
           node {
             tags
@@ -73,8 +93,10 @@ const BikesFilter = props => {
       }
     }
   `)
+  let filtersToReduce = bikeFilters.edges
+  if (props.type === 'accessories') filtersToReduce = accesFilters.edges
 
-  let tagsNew = tags.edges.reduce((acc, { node }) => {
+  let tags = filtersToReduce.reduce((acc, { node }) => {
     node.tags.forEach(tag => {
       if (acc[tag]) {
         acc[tag].count += 1
@@ -88,12 +110,12 @@ const BikesFilter = props => {
   }, [])
 
   const tagsFormated = []
-  for (let key in tagsNew) {
-    tagsFormated.push({ category: key, count: tagsNew[key].count })
+  for (let key in tags) {
+    tagsFormated.push({ category: key, count: tags[key].count })
   }
 
   let prices = []
-  tags.edges.forEach(({ node }) => {
+  filtersToReduce.forEach(({ node }) => {
     prices.push(+node.priceRange.minVariantPrice.amount)
     prices.push(+node.priceRange.maxVariantPrice.amount)
   })
@@ -108,22 +130,25 @@ const BikesFilter = props => {
     `
   })
   newPrices.pop()
-  const [price, setPrice] = useState(newPrices[0])
+
   const handleCategoryChange = e => {
-    navigate(`/bikes/${e.target.value}`)
+    navigate(`/${props.type}/${e.target.value}`)
   }
 
-  const handleFilterChange = e => {
+  const handleFilterChange = (e, filterName) => {
     // console.log(e.target.value)
-    navigate(`${props.pathname}?price=${e.target.value}`)
+    navigate(`${props.pathname}?${filterName}=${e.target.value}`)
   }
 
   //   console.log(props, 'props')
   return (
     <BikePageFilters>
-      <div className="select-wrapper" onChange={e => handleFilterChange(e)}>
+      <div
+        className="select-wrapper"
+        onChange={e => handleFilterChange(e, 'price')}
+      >
         <select name="price">
-          <option>Price</option>
+          <option value="">Price</option>
           {newPrices.map((price, index) => (
             <option key={`${price}-${index}`} value={price}>
               {price}
@@ -137,7 +162,7 @@ const BikesFilter = props => {
           value={props.selectedTag}
           onChange={e => handleCategoryChange(e)}
         >
-          <option>Category</option>
+          <option value="">Category</option>
           {tagsFormated.map((tag, index) => (
             <option key={`${tag}-${index}`} value={tag.category}>
               {tag.category}({tag.count})

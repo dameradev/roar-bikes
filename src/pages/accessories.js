@@ -8,13 +8,16 @@ import helmets from '../assets/images/helmets.png'
 import phone from '../assets/images/phone.png'
 import bags from '../assets/images/bags.png'
 import Product from '../components/ProductGrid/product'
+import Filters from '../components/Filters'
+
+import queryString from 'query-string'
 
 const AccesoriesStyles = styled.div`
   padding: 5rem 10%;
 
   .category-shortcuts {
     max-width: 120rem;
-    margin: 0 auto;
+    margin: 5rem auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
     gap: 5rem;
@@ -75,7 +78,44 @@ const categoryShortcuts = [
   },
 ]
 const Accesories = props => {
-  const accesories = props?.data?.accesories?.edges
+  const price = props.location.search
+    ? queryString.parse(props.location.search)
+    : null
+  // console.log()
+  let minPrice = null
+  let maxPrice = null
+
+  if (price) {
+    const minPriceArray = Array.from(price?.price?.replace(/\D/g, ' ')).filter(
+      value => value !== ' '
+    )
+
+    minPrice = parseInt(
+      minPriceArray.slice(0, minPriceArray.length / 2).join('')
+    )
+
+    const maxPriceArray = Array.from(price?.price?.replace(/\D/g, ' ')).filter(
+      value => value !== ' '
+    )
+
+    maxPrice = parseInt(
+      maxPriceArray
+        .slice(minPriceArray.length / 2, maxPriceArray.length)
+        .join('')
+    )
+  }
+
+  const accessories = props?.data?.accessories?.edges
+  let filteredAccessories = accessories
+
+  if (minPrice || maxPrice) {
+    filteredAccessories = accessories.filter(({ node }) => {
+      const minAmount = +node.priceRange.minVariantPrice.amount
+      const maxAmount = +node.priceRange.maxVariantPrice.amount
+      if (minAmount >= minPrice && maxAmount <= maxPrice) return node
+    })
+  }
+
   return (
     <>
       <Slideshow
@@ -95,8 +135,14 @@ const Accesories = props => {
             </div>
           ))}
         </div>
+
+        <Filters
+          selectedTag={props.pageContext.tag}
+          pathname={props.location.pathname}
+          type={'accessories'}
+        />
         <div className="accesories-grid">
-          {accesories.map(
+          {filteredAccessories.map(
             ({
               node: {
                 id,
@@ -117,10 +163,10 @@ const Accesories = props => {
 }
 
 export const query = graphql`
-  query {
-    accesories: allShopifyProduct(
+  query AccessoriesQuery($tagRegex: String) {
+    accessories: allShopifyProduct(
       sort: { fields: [createdAt], order: DESC }
-      filter: { productType: { in: "accesories" } }
+      filter: { productType: { in: "accessories" }, tags: { regex: $tagRegex } }
     ) {
       edges {
         node {
@@ -137,6 +183,14 @@ export const query = graphql`
                   ...GatsbyImageSharpFluid_withWebp_tracedSVG
                 }
               }
+            }
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+            }
+            maxVariantPrice {
+              amount
             }
           }
           variants {

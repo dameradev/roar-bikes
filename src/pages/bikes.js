@@ -13,10 +13,9 @@ import Product from '../components/ProductGrid/product'
 
 import BackgroundSlider from 'gatsby-image-background-slider'
 import Slideshow from '../components/Slideshow'
-import BikesFilter from '../components/BikesFilter'
+import Filters from '../components/Filters'
 
 import queryString from 'query-string'
-import { filter } from 'lodash'
 
 const BikePageStyles = styled.div`
   /* background: url(${BikeBackgound}) no-repeat; */
@@ -80,7 +79,6 @@ const bikes = props => {
   //   store: { checkout },
   // } = useContext(StoreContext)
 
-  console.log()
   const price = props.location.search
     ? queryString.parse(props.location.search)
     : null
@@ -88,7 +86,6 @@ const bikes = props => {
   let minPrice = null
   let maxPrice = null
 
-  console.log(price)
   if (price) {
     minPrice = parseInt(
       Array.from(price?.price?.replace(/\D/g, ' ').trim())
@@ -108,10 +105,8 @@ const bikes = props => {
   const bikes = props?.data?.bikes?.edges
   let filteredBikes = bikes
 
-  console.log(maxPrice)
   if (minPrice || maxPrice) {
     filteredBikes = bikes.filter(({ node }) => {
-      // console.log(node)
       const minAmount = +node.priceRange.minVariantPrice.amount
       const maxAmount = +node.priceRange.maxVariantPrice.amount
       if (minAmount >= minPrice && maxAmount <= maxPrice) return node
@@ -130,9 +125,10 @@ const bikes = props => {
       />
 
       <BikePageStyles>
-        <BikesFilter
+        <Filters
           selectedTag={props.pageContext.tag}
           pathname={props.location.pathname}
+          type={'bikes'}
         />
         <div className="bike-grid">
           {filteredBikes.map(

@@ -1,26 +1,8 @@
 const path = require(`path`)
 
 async function turnBikesIntoPages({ graphql, actions }) {
-  // 1. Get the template
   const bikesTemplate = path.resolve('./src/pages/bikes.js')
-  // 2. query all the toppings
 
-  // {
-  //   allShopifyProduct {
-  //     edges {
-  //       node {
-  //         handle
-  //       }
-  //     }
-  //   }
-  // }
-  // const { data } = await graphql(`
-  //   {
-  //     bikes: allShopifyProduct {
-  //
-  //     }
-  //   }
-  // `)
   return graphql(`
     {
       bikes: allShopifyProduct(filter: { productType: { ne: "accessories" } }) {
@@ -40,9 +22,6 @@ async function turnBikesIntoPages({ graphql, actions }) {
       }
     }
   `).then(({ data }) => {
-    console.log(data)
-    console.log(data.bikes, 'bikes')
-
     let tags = data.bikes.edges.reduce((acc, { node }) => {
       node.tags.forEach(tag => {
         if (acc[tag]) {
@@ -73,21 +52,62 @@ async function turnBikesIntoPages({ graphql, actions }) {
       })
     })
   })
-  console.log(data, 'here')
-  console.log('turn pages itno bis')
-  // 3. createPage for that topping
-  // data.toppings.nodes.forEach(topping => {
-  //   actions.createPage({
-  //     path: `topping/${topping.name}`,
-  //     component: toppingTemplate,
-  //     context: {
-  //       topping: topping.name,
-  //       // TODO Regex for Topping
-  //       toppingRegex: `/${topping.name}/i`,
-  //     },
-  //   })
-  // })
-  // 4. Pass topping data to pizza.js
+}
+
+async function turnAccessoriesIntoPages({ graphql, actions }) {
+  const accessoriesTemplate = path.resolve('./src/pages/accessories.js')
+
+  return graphql(`
+    {
+      accessories: allShopifyProduct(
+        filter: { productType: { eq: "accessories" } }
+      ) {
+        edges {
+          node {
+            tags
+            priceRange {
+              minVariantPrice {
+                amount
+              }
+              maxVariantPrice {
+                amount
+              }
+            }
+          }
+        }
+      }
+    }
+  `).then(({ data }) => {
+    let tags = data.accessories.edges.reduce((acc, { node }) => {
+      node.tags.forEach(tag => {
+        if (acc[tag]) {
+          acc[tag].count += 1
+        } else {
+          acc[tag] = {
+            count: 1,
+          }
+        }
+      })
+      return acc
+    }, [])
+
+    const tagsFormated = []
+    for (let key in tags) {
+      tagsFormated.push(key)
+    }
+
+    tagsFormated.forEach(tag => {
+      actions.createPage({
+        path: `accessories/${tag}`,
+        component: accessoriesTemplate,
+        context: {
+          tag: tag,
+          // TODO Regex for Topping
+          tagRegex: `/${tag}/i`,
+        },
+      })
+    })
+  })
 }
 
 async function turnProductsIntoPages({ graphql, actions }) {
@@ -118,5 +138,9 @@ async function turnProductsIntoPages({ graphql, actions }) {
 }
 
 exports.createPages = async params => {
-  await Promise.all([turnProductsIntoPages(params), turnBikesIntoPages(params)])
+  await Promise.all([
+    turnProductsIntoPages(params),
+    turnBikesIntoPages(params),
+    turnAccessoriesIntoPages(params),
+  ])
 }
