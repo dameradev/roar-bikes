@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { graphql, Link } from 'gatsby'
+import { graphql, Link, useStaticQuery } from 'gatsby'
 import React, { useContext } from 'react'
 // import { PriceTag, Product, Title } from '../components/ProductGrid/styles'
 
@@ -13,6 +13,7 @@ import Product from '../components/ProductGrid/product'
 
 import BackgroundSlider from 'gatsby-image-background-slider'
 import Slideshow from '../components/Slideshow'
+import BikesFilter from '../components/BikesFilter'
 
 const BikePageStyles = styled.div`
   /* background: url(${BikeBackgound}) no-repeat; */
@@ -71,63 +72,28 @@ const BikePageStyles = styled.div`
     }
   }
 `
-
-const BikePageFilters = styled.div`
-  padding: 1rem 10%;
-  .select-wrapper {
-    width: 20rem;
-    height: 5rem;
-    position: relative;
-    color: #606060;
-    border: 1px solid #606060;
-
-    &:after {
-      content: '⌄';
-      color: #606060;
-      display: inline-block;
-      right: 11px;
-      top: 6px;
-      height: 34px;
-      width: 34px;
-      position: absolute;
-      pointer-events: none;
-    }
-  }
-  select {
-    padding: 1rem 2.5rem;
-    font-size: 1.8rem;
-    color: inherit;
-    text-transform: uppercase;
-    width: 100%;
-    height: 100%;
-    border: none;
-    font-weight: 800;
-
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    position: relative;
-
-    &::-ms-expand {
-      display: none;
-    }
-    /* &::::before */
-
-    option {
-      &:first-of-type {
-        font-size: 1.8rem;
-        padding: 1rem 2.5rem;
-      }
-    }
-  }
-`
-
 const bikes = props => {
   // const {
   //   store: { checkout },
   // } = useContext(StoreContext)
 
   const bikes = props?.data?.bikes?.edges
+
+  let prices = []
+  bikes.forEach(({ node }) => {
+    prices.push(+node.priceRange.minVariantPrice.amount)
+    prices.push(+node.priceRange.maxVariantPrice.amount)
+  })
+  prices.sort((a, b) => (a > b ? 1 : -1))
+  prices = [...new Set(prices)]
+
+  const newPrices = prices.map((price, index) => {
+    return `
+      ${price} 
+      ${prices.length - 1 !== index ? 'to' : ''} 
+      ${prices[index + 1] ? prices[index + 1] : '+'} €
+    `
+  })
 
   const priceRange = [
     '500$-999$',
@@ -139,11 +105,6 @@ const bikes = props => {
     '6000$-6999$',
     '7000$+',
   ]
-  // console.log(bikes.node)
-  // const {
-  //   node: { id },
-  // } = bikes
-  // console.log(bikes.flat())
 
   return (
     <>
@@ -154,16 +115,7 @@ const bikes = props => {
           { text: 'Riding has never been better', button: 'electric bikes' },
         ]}
       />
-      <BikePageFilters>
-        <div className="select-wrapper">
-          <select name="price">
-            <option>Price</option>
-            {priceRange.map(price => (
-              <option value={price}>{price}</option>
-            ))}
-          </select>
-        </div>
-      </BikePageFilters>
+
       <BikePageStyles>
         {/* <div className="filters">
         <h3>Filters</h3>
@@ -190,6 +142,7 @@ const bikes = props => {
           </li>
         </ul>
       </div> */}
+        <BikesFilter selectedTag={props.pageContext.tag} />
         <div className="bike-grid">
           {bikes.map(
             ({
@@ -212,8 +165,11 @@ const bikes = props => {
 }
 
 export const query = graphql`
-  query {
-    bikes: allShopifyProduct(sort: { fields: [createdAt], order: DESC }) {
+  query BikesQuery($tagRegex: String) {
+    bikes: allShopifyProduct(
+      sort: { fields: [createdAt], order: DESC }
+      filter: { productType: { ne: "accessories" }, tags: { regex: $tagRegex } }
+    ) {
       edges {
         node {
           id
@@ -231,8 +187,17 @@ export const query = graphql`
               }
             }
           }
+          tags
           variants {
             price
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+            }
+            maxVariantPrice {
+              amount
+            }
           }
         }
       }

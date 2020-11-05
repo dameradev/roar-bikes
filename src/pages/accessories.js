@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import React from 'react'
 import Slideshow from '../components/Slideshow'
+import { graphql } from 'gatsby'
 
 import lights from '../assets/images/lights.png'
 import helmets from '../assets/images/helmets.png'

@@ -24,8 +24,13 @@ export const Product = styled.div`
   &:hover {
     box-shadow: 0px 4px 6px #00000029;
     opacity: 1;
+    button {
+      visibility: visible;
+    }
   }
+
   button {
+    visibility: hidden;
     width: fit-content;
     padding: 1rem 3rem;
     background: #fff;
