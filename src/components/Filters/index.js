@@ -122,24 +122,32 @@ const BikesFilter = props => {
   prices.sort((a, b) => (a > b ? 1 : -1))
   prices = [...new Set(prices)]
 
+  prices = prices.filter((price, index) => index % 2 === 0 && price)
   const newPrices = prices.map((price, index) => {
-    return `
-      ${price} 
-      ${prices.length - 1 !== index ? 'to' : ''} 
-      ${prices[index + 1] ? prices[index + 1] : '+'} €
-    `
+    return { minPrice: price, maxPrice: prices[index + 1] }
+    // return `
+    // ${price}
+    // ${prices.length - 1 !== index ? 'to' : ''}
+    // ${prices[index + 1] ? prices[index + 1] : '+'} €
+    // `
   })
-  newPrices.pop()
+  // newPrices.pop()
 
   const handleCategoryChange = e => {
-    navigate(`/${props.type}/${e.target.value}`)
+    navigate(`/${props.type}/${e.target.value}`, {
+      state: { scrollY: window.scrollY },
+    })
   }
 
   const handleFilterChange = (e, filterName) => {
-    // console.log(e.target.value)
-    navigate(`${props.pathname}?${filterName}=${e.target.value}`)
+    console.log(e.target.value)
+
+    navigate(`${props.pathname}?${filterName}=${e.target.value}`, {
+      state: { scrollY: window.scrollY },
+    })
   }
 
+  // console.log(window)
   //   console.log(props, 'props')
   return (
     <BikePageFilters>
@@ -150,8 +158,11 @@ const BikesFilter = props => {
         <select name="price">
           <option value="">Price</option>
           {newPrices.map((price, index) => (
-            <option key={`${price}-${index}`} value={price}>
-              {price}
+            <option
+              key={`${price}-${index}`}
+              value={`${price.minPrice}-${price.maxPrice}`}
+            >
+              ${price.minPrice} to ${price.maxPrice}
             </option>
           ))}
         </select>

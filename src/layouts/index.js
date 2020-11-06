@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { StaticQuery, graphql } from 'gatsby'
 import styled from '@emotion/styled'
@@ -26,6 +26,13 @@ const Layout = ({ children }) => {
   const toggleNav = navOpen => {
     setNavOpen(!navOpen)
   }
+
+  useEffect(() => {
+    const scrollY = children.props.location.state?.scrollY
+    if (scrollY > 0) {
+      window.scrollTo(0, scrollY)
+    }
+  })
 
   return (
     <ContextProvider>

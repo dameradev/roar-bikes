@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { graphql, Link, useStaticQuery } from 'gatsby'
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 // import { PriceTag, Product, Title } from '../components/ProductGrid/styles'
 
 import StoreContext from '~/context/StoreContext'
@@ -75,10 +75,6 @@ const BikePageStyles = styled.div`
   }
 `
 const bikes = props => {
-  // const {
-  //   store: { checkout },
-  // } = useContext(StoreContext)
-
   const price = props.location.search
     ? queryString.parse(props.location.search)
     : null
@@ -87,21 +83,11 @@ const bikes = props => {
   let maxPrice = null
 
   if (price) {
-    minPrice = parseInt(
-      Array.from(price?.price?.replace(/\D/g, ' ').trim())
-        .filter(value => value !== ' ')
-        .slice(0, 4)
-        .join('')
-    )
-    maxPrice = parseInt(
-      Array.from(price?.price?.replace(/\D/g, ' ').trim())
-        .filter(value => value !== ' ')
-        .slice(4, 9)
-        .join('')
-    )
+    const priceFormated = JSON.stringify(price.price)
+    minPrice = priceFormated.split('-')[0].replace(/[^a-z0-9-]/g, '')
+    maxPrice = priceFormated.split('-')[1].replace(/[^a-z0-9-]/g, '')
   }
-  // console.log(minPrice)
-  // console.log(price.replace(/\D/g, ''))
+
   const bikes = props?.data?.bikes?.edges
   let filteredBikes = bikes
 
@@ -109,11 +95,18 @@ const bikes = props => {
     filteredBikes = bikes.filter(({ node }) => {
       const minAmount = +node.priceRange.minVariantPrice.amount
       const maxAmount = +node.priceRange.maxVariantPrice.amount
-      if (minAmount >= minPrice && maxAmount <= maxPrice) return node
+      if (maxPrice !== 'undefined') {
+        if (
+          (minAmount >= minPrice && maxAmount <= maxPrice) ||
+          (minAmount <= maxPrice && maxAmount >= minPrice)
+        )
+          return node
+      } else if (minAmount >= minPrice || maxAmount >= minPrice) {
+        return node
+      }
     })
   }
 
-  console.log(filteredBikes)
   return (
     <>
       <Slideshow
@@ -131,19 +124,21 @@ const bikes = props => {
           type={'bikes'}
         />
         <div className="bike-grid">
-          {filteredBikes.map(
-            ({
-              node: {
-                id,
-                handle,
-                title,
-                images: [firstImage],
-                variants: [firstVariant],
-              },
-              node,
-            }) => (
-              <Product key={id} node={node} />
+          {filteredBikes.length ? (
+            filteredBikes.map(
+              ({
+                node: {
+                  id,
+                  handle,
+                  title,
+                  images: [firstImage],
+                  variants: [firstVariant],
+                },
+                node,
+              }) => <Product key={id} node={node} />
             )
+          ) : (
+            <h2>We don't have any products based on your search criteria!</h2>
           )}
         </div>
       </BikePageStyles>
