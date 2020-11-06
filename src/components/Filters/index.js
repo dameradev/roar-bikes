@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import { useStaticQuery, graphql, navigate } from 'gatsby'
 import React, { useState } from 'react'
 
+import queryString from 'query-string'
+
 const BikePageFilters = styled.div`
   /* padding: 1rem 10%; */
   display: flex;
@@ -125,49 +127,25 @@ const BikesFilter = props => {
   prices = prices.filter((price, index) => index % 2 === 0 && price)
   const newPrices = prices.map((price, index) => {
     return { minPrice: price, maxPrice: prices[index + 1] }
-    // return `
-    // ${price}
-    // ${prices.length - 1 !== index ? 'to' : ''}
-    // ${prices[index + 1] ? prices[index + 1] : '+'} €
-    // `
   })
-  // newPrices.pop()
+  const { price: priceFromQuery } = queryString.parse(props.location.search)
+  const [price, setPrice] = useState(priceFromQuery ? priceFromQuery : '')
 
   const handleCategoryChange = e => {
-    navigate(`/${props.type}/${e.target.value}`, {
+    navigate(`/${props.type}/${e.target.value}?price=${price}`, {
       state: { scrollY: window.scrollY },
     })
   }
 
   const handleFilterChange = (e, filterName) => {
-    console.log(e.target.value)
-
-    navigate(`${props.pathname}?${filterName}=${e.target.value}`, {
+    setPrice(e.target.value)
+    navigate(`${props.location.pathname}?${filterName}=${e.target.value}`, {
       state: { scrollY: window.scrollY },
     })
   }
 
-  // console.log(window)
-  //   console.log(props, 'props')
   return (
     <BikePageFilters>
-      <div
-        className="select-wrapper"
-        onChange={e => handleFilterChange(e, 'price')}
-      >
-        <select name="price">
-          <option value="">Price</option>
-          {newPrices.map((price, index) => (
-            <option
-              key={`${price}-${index}`}
-              value={`${price.minPrice}-${price.maxPrice}`}
-            >
-              ${price.minPrice} to ${price.maxPrice}
-            </option>
-          ))}
-        </select>
-      </div>
-
       <div className="select-wrapper">
         <select
           value={props.selectedTag}
@@ -177,6 +155,29 @@ const BikesFilter = props => {
           {tagsFormated.map((tag, index) => (
             <option key={`${tag}-${index}`} value={tag.category}>
               {tag.category}({tag.count})
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="select-wrapper">
+        <select
+          name="price"
+          onChange={e => handleFilterChange(e, 'price')}
+          value={price || priceFromQuery}
+        >
+          <option value="">Price</option>
+          {newPrices.map((price, index) => (
+            <option
+              key={`${price}-${index}`}
+              value={`${
+                price.maxPrice
+                  ? `${price.minPrice}-${price.maxPrice}`
+                  : price.minPrice
+              }`}
+            >
+              {index === prices.length - 1
+                ? `$${price.minPrice} +`
+                : `$${price.minPrice} to $${price.maxPrice}`}
             </option>
           ))}
         </select>

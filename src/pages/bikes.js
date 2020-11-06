@@ -15,7 +15,7 @@ import BackgroundSlider from 'gatsby-image-background-slider'
 import Slideshow from '../components/Slideshow'
 import Filters from '../components/Filters'
 
-import queryString from 'query-string'
+import handlePrice from '../utils/handlePrice'
 
 const BikePageStyles = styled.div`
   /* background: url(${BikeBackgound}) no-repeat; */
@@ -75,38 +75,7 @@ const BikePageStyles = styled.div`
   }
 `
 const bikes = props => {
-  const price = props.location.search
-    ? queryString.parse(props.location.search)
-    : null
-  // console.log()
-  let minPrice = null
-  let maxPrice = null
-
-  if (price) {
-    const priceFormated = JSON.stringify(price.price)
-    minPrice = priceFormated.split('-')[0].replace(/[^a-z0-9-]/g, '')
-    maxPrice = priceFormated.split('-')[1].replace(/[^a-z0-9-]/g, '')
-  }
-
-  const bikes = props?.data?.bikes?.edges
-  let filteredBikes = bikes
-
-  if (minPrice || maxPrice) {
-    filteredBikes = bikes.filter(({ node }) => {
-      const minAmount = +node.priceRange.minVariantPrice.amount
-      const maxAmount = +node.priceRange.maxVariantPrice.amount
-      if (maxPrice !== 'undefined') {
-        if (
-          (minAmount >= minPrice && maxAmount <= maxPrice) ||
-          (minAmount <= maxPrice && maxAmount >= minPrice)
-        )
-          return node
-      } else if (minAmount >= minPrice || maxAmount >= minPrice) {
-        return node
-      }
-    })
-  }
-
+  const filteredBikes = handlePrice(props)
   return (
     <>
       <Slideshow
@@ -120,7 +89,7 @@ const bikes = props => {
       <BikePageStyles>
         <Filters
           selectedTag={props.pageContext.tag}
-          pathname={props.location.pathname}
+          location={props.location}
           type={'bikes'}
         />
         <div className="bike-grid">
