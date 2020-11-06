@@ -128,7 +128,7 @@ const BikesFilter = props => {
   const newPrices = prices.map((price, index) => {
     return { minPrice: price, maxPrice: prices[index + 1] }
   })
-  const { price: priceFromQuery } = queryString.parse(props.location.search)
+  const { price: priceFromQuery } = queryString.parse(props.location?.search)
   const [price, setPrice] = useState(priceFromQuery ? priceFromQuery : '')
 
   const handleCategoryChange = e => {
