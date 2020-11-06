@@ -219,13 +219,39 @@ const Art = styled.div`
   ${respondTo.tabletMini`
     height: 30vh;
   `}
+  h2 {
+    font-size: 5rem;
+    position: absolute;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, rgba(90,192,240,1) 0%, rgba(227,140,77,1) 49%, rgba(233,70,48,1) 100%);
+    -webkit-background-clip: text;
+    color: transparent;
+    top: 10vh;
+    left: 10vw;
+    /* font-style: italic; */
+    letter-spacing: 1rem;
+    transform: skew(-15deg);
+    ${respondTo.desktopExtraLarge`
+      font-size: 6rem;
+    `}
+    ${respondTo.tablet`
+      font-size: 3rem;
+    `}
+    ${respondTo.tabletMini`
+      top: 2vh;
+      left: 5vw;
+    `}
+  
+    
+  }
   .art-bike {
     width: 30vw;
     height: 30vw;
     position: absolute;
-    bottom: 5vh;
-    right: 25vw;
+    bottom: 3vh;
+    right: 20vw;
     z-index: 10;
+    
     ${respondTo.laptop`
       height: 40vw;
     `}
@@ -281,6 +307,7 @@ const IndexPage = () => (
 
     <ProductGrid />
     <Art>
+      <h2>Riding in color</h2>
       <img className="art-bike" src={ArtBike} />
       <img className="art-bottom" src={ArtBottom} />
     </Art>
