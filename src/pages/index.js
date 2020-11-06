@@ -7,7 +7,11 @@ import styled from '@emotion/styled'
 import heroback from '../assets/images/hero-back.jpg'
 import UrbanBike from '../assets/images/urban-bike.jpg'
 import NewLineUp from '../assets/images/new-line-up.jpg'
+import ArtBottom from '../assets/images/art-bottom.png'
+import ArtBike from '../assets/images/art-bike.png'
 import { respondTo } from '../utils/respondTo'
+
+// import Img from 'gatsb'
 
 const HeroStyles = styled.div`
   background: url(${heroback});
@@ -204,6 +208,44 @@ const NewLineUpStyles = styled.div`
     }
   }
 `
+
+const Art = styled.div`
+  ${respondTo.desktopExtraLarge`
+      height: 60vh;
+  `}
+  height: 40vh;
+  position: relative;
+
+  ${respondTo.tabletMini`
+    height: 30vh;
+  `}
+  .art-bike {
+    width: 30vw;
+    height: 30vw;
+    position: absolute;
+    bottom: 5vh;
+    right: 25vw;
+    z-index: 10;
+    ${respondTo.laptop`
+      height: 40vw;
+    `}
+    ${respondTo.tablet`
+      height: 50vw;
+      width: 40vw;
+    `}
+    ${respondTo.tabletMini`
+      height: 40vw;
+      width: 30vw;
+    `}
+  }
+  .art-bottom {
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    bottom: 0;
+  }
+`
+
 const IndexPage = () => (
   <>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
@@ -238,6 +280,11 @@ const IndexPage = () => (
     </NewLineUpStyles>
 
     <ProductGrid />
+    <Art>
+      <img className="art-bike" src={ArtBike} />
+      <img className="art-bottom" src={ArtBottom} />
+    </Art>
+
     {/* <Link to="/page-2/">Go to page 2</Link> */}
   </>
 )
