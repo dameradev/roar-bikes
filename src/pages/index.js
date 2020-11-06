@@ -241,6 +241,11 @@ const Art = styled.div`
       top: 2vh;
       left: 5vw;
     `}
+    ${respondTo.mobile`
+      position: static;
+      text-align: center;
+      letter-spacing: 0.5rem;
+    `}
   
     
   }

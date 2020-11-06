@@ -19,16 +19,16 @@ const BikePageFilters = styled.div`
       content: '⌄';
       color: #606060;
       display: inline-block;
-      right: 11px;
+      right: 10px;
       top: 6px;
       height: 34px;
-      width: 34px;
+      /* width: 34px; */
       position: absolute;
       pointer-events: none;
     }
   }
   select {
-    padding: 1rem 2.5rem;
+    padding: 1rem 1rem;
     font-size: 1.8rem;
     color: inherit;
     text-transform: capitalize;
@@ -136,10 +136,11 @@ const BikesFilter = props => {
       state: { scrollY: window.scrollY },
     })
   }
-
+  console.log(props)
   const handleFilterChange = (e, filterName) => {
     setPrice(e.target.value)
-    navigate(`${props.location.pathname}?${filterName}=${e.target.value}`, {
+
+    navigate(`${props.location?.pathname}?${filterName}=${e.target.value}`, {
       state: { scrollY: window.scrollY },
     })
   }

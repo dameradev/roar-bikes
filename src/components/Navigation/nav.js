@@ -4,7 +4,7 @@ import { CartCounter, MenuLink } from './styles'
 import { respondTo } from '../../utils/respondTo'
 
 const NavStyles = styled.nav`
-
+width: 100%;
   /* ${respondTo.tabletMini`
       display: none;
   `} */

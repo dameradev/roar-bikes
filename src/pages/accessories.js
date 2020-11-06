@@ -19,7 +19,7 @@ const AccesoriesStyles = styled.div`
     max-width: 120rem;
     margin: 5rem auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     gap: 5rem;
     justify-items: center;
 
@@ -53,7 +53,7 @@ const AccesoriesStyles = styled.div`
     display: grid;
     /* text-align: center; */
 
-    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     grid-gap: 5rem;
     justify-items: space-between;
   }
@@ -102,7 +102,7 @@ const Accesories = props => {
 
         <Filters
           selectedTag={props.pageContext.tag}
-          pathname={props.location.pathname}
+          location={props.location}
           type={'accessories'}
         />
         <div className="accesories-grid">

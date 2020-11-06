@@ -60,7 +60,7 @@ const BikePageStyles = styled.div`
     display: grid;
     /* text-align: center; */
 
-    grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
     grid-gap: 5rem;
     justify-items: space-between;
      a {
