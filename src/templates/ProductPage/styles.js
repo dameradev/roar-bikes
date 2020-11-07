@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { respondTo } from '../../utils/respondTo'
 
 export const ProductTitle = styled.h1`
   font-size: 2.25rem;
@@ -20,6 +21,11 @@ export const ProductStyles = styled.div`
   display: grid;
   grid-template-columns: 1fr minmax(20rem, 40rem);
   grid-column-gap: 6rem;
+  ${respondTo.tabletMini`
+      grid-template-columns: 1fr;
+      grid-row-gap: 2rem;
+      
+  `}
 `
 export const ProductDetails = styled.div`
   .product {
@@ -30,7 +36,14 @@ export const ProductDetails = styled.div`
 
     &__description {
       text-align: justify;
+      ${respondTo.mobileSmall`
+        font-size: 1.6rem;
+      `}
     }
   }
 `
-export const ProductImage = styled.div``
+export const ProductImage = styled.div`
+  .gatsby-image-wrapper {
+    /* width: ; */
+  }
+`
