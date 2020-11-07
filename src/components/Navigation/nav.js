@@ -4,35 +4,37 @@ import { CartCounter, MenuLink } from './styles'
 import { respondTo } from '../../utils/respondTo'
 
 const NavStyles = styled.nav`
-width: 100%;
-  /* ${respondTo.tabletMini`
-      display: none;
-  `} */
-
   .hamburger {
-      color: white;
-      display: none;
+    color: white;
+    display: none;
+
     ${respondTo.tabletMini`
       display: block;
-    `} 
+    `}
   }
 `
 
-const Nav = ({ hasItems, quantity, className }) => {
+const Nav = ({ hasItems, quantity, className, toggleNav, isOpenNav }) => {
   return (
     <NavStyles className={className}>
       <ul>
         <li>
-          <MenuLink to="/">Home</MenuLink>
+          <MenuLink onClick={() => toggleNav(isOpenNav)} to="/">
+            Home
+          </MenuLink>
         </li>
         <li>
-          <MenuLink to="/bikes">Bikes</MenuLink>
+          <MenuLink onClick={() => toggleNav(isOpenNav)} to="/bikes">
+            Bikes
+          </MenuLink>
         </li>
         <li>
-          <MenuLink to="/accessories">Accesories</MenuLink>
+          <MenuLink onClick={() => toggleNav(isOpenNav)} to="/accessories">
+            Accesories
+          </MenuLink>
         </li>
         <li>
-          <MenuLink to="/cart">
+          <MenuLink onClick={() => toggleNav(isOpenNav)} to="/cart">
             {hasItems && <CartCounter>{quantity}</CartCounter>}
             Cart 🛍
           </MenuLink>

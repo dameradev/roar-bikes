@@ -40,7 +40,7 @@ const Layout = ({ children }) => {
       <Typography />
 
       <Navigation toggleNav={toggleNav} isOpenNav={navOpen} />
-      {navOpen && <Drawer toggleNav={toggleNav} isOpenNav={navOpen} />}
+      <Drawer toggleNav={toggleNav} isOpenNav={navOpen} />
       <Wrapper>
         {children}
         <Footer />

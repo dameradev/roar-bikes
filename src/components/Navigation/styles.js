@@ -31,9 +31,33 @@ export const HeaderWrapper = styled.header`
   .hamburger {
     color: white;
     display: none;
+    position: relative;
+    .close-icon {
+      opacity: 0;
+      /* display: none; */
+    }
+
+    .close-icon,
+    .menu-icon {
+      width: 3rem;
+      height: 3rem;
+      position: absolute;
+      right: 0;
+      top: -12px;
+      transition: all 0.5s;
+    }
     ${respondTo.tabletMini`
       display: block;
     `}
+  }
+
+  .hamburger-open {
+    .menu-icon {
+      opacity: 0;
+    }
+    .close-icon {
+      opacity: 1;
+    }
   }
 `
 
@@ -47,7 +71,6 @@ export const Container = styled.div`
   height: 100%;
   ul {
     display: flex;
-
     li {
       line-height: 4rem;
       font-size: 2rem;

@@ -228,9 +228,11 @@ const Art = styled.div`
     color: transparent;
     top: 10vh;
     left: 10vw;
-    /* font-style: italic; */
+    font-style: italic;
     letter-spacing: 1rem;
-    transform: skew(-15deg);
+    /* transform: skew(-15deg); */
+    /* width: 90%; */
+    
     ${respondTo.desktopExtraLarge`
       font-size: 6rem;
     `}
@@ -244,6 +246,7 @@ const Art = styled.div`
     ${respondTo.mobile`
       position: static;
       text-align: center;
+      
       letter-spacing: 0.5rem;
     `}
   

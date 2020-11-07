@@ -10,6 +10,8 @@ import { Img } from '../../utils/styles'
 import icons from '../../utils/icons'
 import Nav from './nav'
 
+import { Close as CloseIcon, Menu as MenuIcon } from '@material-ui/icons'
+
 const useQuantity = () => {
   const {
     store: { checkout },
@@ -35,8 +37,12 @@ const Navigation = ({ siteTitle, isOpenNav, toggleNav }) => {
           hasItems={hasItems}
           quantity={quantity}
         />
-        <div className="hamburger" onClick={() => toggleNav(isOpenNav)}>
-          mob
+        <div
+          className={`hamburger ${isOpenNav && 'hamburger-open'}`}
+          onClick={() => toggleNav(isOpenNav)}
+        >
+          <MenuIcon className="menu-icon" />
+          <CloseIcon className="close-icon" />
         </div>
       </Container>
     </HeaderWrapper>
