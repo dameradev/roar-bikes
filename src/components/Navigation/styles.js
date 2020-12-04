@@ -32,6 +32,7 @@ export const HeaderWrapper = styled.header`
     color: white;
     display: none;
     position: relative;
+
     .close-icon {
       opacity: 0;
       /* display: none; */
@@ -99,9 +100,12 @@ export const CartCounter = styled.span`
   background-color: white;
   color: #663399;
   border-radius: 20px;
-  padding: 0 10px;
+  padding: 0.5rem;
   font-size: 1.2rem;
-  float: right;
+
   margin: -10px;
   z-index: 20;
+  position: absolute;
+  right: 0;
+  bottom: -0.5rem;
 `

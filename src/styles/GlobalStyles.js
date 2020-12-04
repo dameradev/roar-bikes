@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { respondTo } from '../utils/respondTo'
 
 const GlobalStyles = createGlobalStyle`
   :root {
@@ -84,6 +85,26 @@ const GlobalStyles = createGlobalStyle`
     transform: rotate(-2deg);
     position: relative;
     display: inline-block;
+  }
+  .cart {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    
+    text-align: center;
+    &__mobile {
+      display: none;
+      ${respondTo.tabletMini`
+        display: block;
+      `}
+    }
+    &__desktop {
+      ${respondTo.tabletMini`
+        display: none;
+      `}
+      
+    }
   }
   
 `

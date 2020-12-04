@@ -1,25 +1,17 @@
 import React, { useContext } from 'react'
-import reduce from 'lodash/reduce'
+
 import PropTypes from 'prop-types'
 
-import StoreContext from '~/context/StoreContext'
 import { CartCounter, Container, MenuLink, HeaderWrapper } from './styles'
 
 import Logo from '../../assets/images/logo.svg'
+import CartIcon from '../../assets/images/cart-icon.svg'
 import { Img } from '../../utils/styles'
 import icons from '../../utils/icons'
 import Nav from './nav'
 
 import { Close as CloseIcon, Menu as MenuIcon } from '@material-ui/icons'
-
-const useQuantity = () => {
-  const {
-    store: { checkout },
-  } = useContext(StoreContext)
-  const items = checkout ? checkout.lineItems : []
-  const total = reduce(items, (acc, item) => acc + item.quantity, 0)
-  return [total !== 0, total]
-}
+import useQuantity from '../../utils/useQuantity'
 
 const Navigation = ({ siteTitle, isOpenNav, toggleNav }) => {
   const [hasItems, quantity] = useQuantity()
@@ -37,6 +29,11 @@ const Navigation = ({ siteTitle, isOpenNav, toggleNav }) => {
           hasItems={hasItems}
           quantity={quantity}
         />
+
+        <MenuLink className="cart cart__desktop" to="/cart">
+          {hasItems && <CartCounter>{quantity}</CartCounter>}
+          Cart <img src={CartIcon} />
+        </MenuLink>
         <div
           className={`hamburger ${isOpenNav && 'hamburger-open'}`}
           onClick={() => toggleNav(isOpenNav)}

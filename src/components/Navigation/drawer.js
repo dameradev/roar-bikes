@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
 import Nav from './nav'
+import useQuantity from '../../utils/useQuantity'
 
 const DrawerStyles = styled.div`
   position: fixed;
@@ -11,7 +12,7 @@ const DrawerStyles = styled.div`
   padding: 0 3rem 3rem 3rem;
 
   z-index: 100000;
-  background: white;
+  background: var(--black);
   /* display: flex; */
   /* justify-content: center; */
   /* align-items: center; */
@@ -19,7 +20,7 @@ const DrawerStyles = styled.div`
   transform: ${props =>
     !props.isOpenNav ? 'translate(200px)' : 'translate(0)'};
   a {
-    color: black;
+    color: #fff;
   }
 
   .mobile-nav {
@@ -38,12 +39,19 @@ const DrawerStyles = styled.div`
 `
 
 const Drawer = ({ isOpenNav, toggleNav }) => {
+  const [hasItems, quantity] = useQuantity()
   return (
     <DrawerStyles
       className={`${isOpenNav && 'drawer-open'} drawer`}
       isOpenNav={isOpenNav}
     >
-      <Nav className="mobile-nav" isOpenNav={isOpenNav} toggleNav={toggleNav} />
+      <Nav
+        hasItems={hasItems}
+        quantity={quantity}
+        className="mobile-nav"
+        isOpenNav={isOpenNav}
+        toggleNav={toggleNav}
+      />
     </DrawerStyles>
   )
 }
