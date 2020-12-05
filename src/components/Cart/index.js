@@ -1,34 +1,27 @@
 import styled from '@emotion/styled'
+import { Table } from 'react-bootstrap'
 import React, { useContext } from 'react'
 
 import StoreContext from '~/context/StoreContext'
 import LineItem from './LineItem'
 
+import { respondTo } from '../../utils/respondTo'
 const CartStyles = styled.div`
-  padding: 2rem 0;
-  .product-header ul {
-    display: flex;
-    background: #eee;
-    padding: 2rem 1rem;
-    margin-bottom: 1rem;
-    li {
-      width: 15%;
-      font-size: 2.4rem;
-
-      &:first-of-type {
-        flex-grow: 1;
-      }
-      &:not(:first-of-type) {
-        text-align: left;
-      }
-    }
+  table {
+    ${respondTo.tabletMini`
+        .img {
+          display: none;
+        }
+    `}
   }
 `
+
 const CheckoutInformation = styled.div`
-  margin-top: 3rem;
+  margin: 5rem 0;
   ul {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 2rem;
     button {
       width: 100%;
       font-size: 2.5rem;
@@ -50,19 +43,20 @@ const Cart = () => {
   ))
 
   return (
-    <>
-      <CartStyles>
-        <div className="product-header">
-          <ul>
-            <li>Product</li>
-            <li>Name</li>
-            <li>Price</li>
-            <li>Quanitity</li>
-            <li>Total</li>
-          </ul>
-          {lineItems}
-        </div>
-      </CartStyles>
+    <CartStyles>
+      <Table striped bordered hover responsive>
+        <thead>
+          <tr>
+            <th className="img"></th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>{lineItems}</tbody>
+      </Table>
+
       <CheckoutInformation>
         <ul>
           <li>
@@ -87,7 +81,7 @@ const Cart = () => {
           </li>
         </ul>
       </CheckoutInformation>
-    </>
+    </CartStyles>
   )
 }
 

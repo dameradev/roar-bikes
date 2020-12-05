@@ -5,11 +5,11 @@ import Cart from '~/components/Cart'
 import { Container } from '~/utils/styles'
 
 const CartPageStyles = styled.div`
-  padding: 0 10%;
+  padding: 0 5%;
   margin-top: 5rem;
 
   .header {
-    padding: 3rem;
+    padding: 3rem 0;
   }
 
   h1 {

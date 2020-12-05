@@ -81,6 +81,10 @@ const GlobalStyles = createGlobalStyle`
     max-width: 100%;
   }
 
+  p {
+    margin: 0;
+  }
+
   .tilt {
     transform: rotate(-2deg);
     position: relative;
@@ -98,6 +102,9 @@ const GlobalStyles = createGlobalStyle`
       ${respondTo.tabletMini`
         display: block;
       `}
+      span {
+        right: 2.5rem;
+      }
     }
     &__desktop {
       ${respondTo.tabletMini`

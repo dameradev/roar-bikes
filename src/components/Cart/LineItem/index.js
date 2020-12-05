@@ -6,30 +6,18 @@ import { Wrapper } from './styles'
 import styled from '@emotion/styled'
 import { Delete as DeleteIcon } from '@material-ui/icons'
 
-const LineItemStyles = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem;
-  &:nth-of-type(2) {
-    background: #eee;
-  }
-  a {
-    flex-grow: 1;
-    img {
-      width: 20rem;
-      height: auto;
-    }
-  }
-  p {
-    width: 15%;
-    text-align: left;
-  }
+import Table from 'react-bootstrap/Table'
+import { respondTo } from '../../../utils/respondTo'
+
+const LineItemStyles = styled.tr`
   .total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    min-width: 15rem;
+    p {
+      display: inline-block;
+    }
+
     svg {
+      float: right;
       width: 3rem;
       height: 3rem;
     }
@@ -42,12 +30,12 @@ const LineItem = props => {
     store: { client, checkout },
   } = useContext(StoreContext)
 
-  console.log(item, 'item')
   const variantImage = item.variant.image ? (
     <img
       src={item.variant.image.src}
       alt={`${item.title} product shot`}
-      height="60px"
+      height="100px"
+      width="160px"
     />
   ) : null
 
@@ -63,25 +51,23 @@ const LineItem = props => {
 
   return (
     <LineItemStyles>
-      {console.log(item)}
-      <Link to={`/product/${item.variant.product.handle}/`}>
-        {variantImage}
-      </Link>
-
-      <p>
-        {item.title}
-        {`  `}
-        {item.variant.title === !'Default Title' ? item.variant.title : ''}
-      </p>
-      <p>$ {item.variant.price}</p>
-      {/* <p>{item.price}</p> */}
-      {/* {selectedOptions} */}
-
-      <p>{item.quantity}</p>
-      <p className="total">
-        $ {item.quantity * item.variant.price}.00
+      <td className="img">
+        <Link to={`/product/${item.variant.product.handle}/`}>
+          {variantImage}
+        </Link>
+      </td>
+      <td>
+        <p>
+          {item.title}
+          {item.variant.title === !'Default Title' ? item.variant.title : ''}
+        </p>
+      </td>
+      <td>{item.variant.price}</td>
+      <td>{item.quantity}</td>
+      <td className="total">
+        <p>{item.quantity * item.variant.price}.00</p>
         <DeleteIcon onClick={handleRemove}>Remove</DeleteIcon>
-      </p>
+      </td>
     </LineItemStyles>
   )
 }
