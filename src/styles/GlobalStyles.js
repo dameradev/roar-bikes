@@ -4,6 +4,8 @@ import { respondTo } from '../utils/respondTo'
 const GlobalStyles = createGlobalStyle`
   :root {
     --blue: #009DFF;
+    --darkblue: #336EF8;
+    --purple: #4545FF;
     --black: #2E2E2E;
     --yellow: #ffc600;
     --white: #fff;
